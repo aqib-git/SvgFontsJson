@@ -45,19 +45,9 @@ namespace FontsJson
                     continue;
                 }
 
-                var xdoc = XDocument.Load(svg);
-
                 dynamic brandSvgIcon = new ExpandoObject();
                 
-                brandSvgIcon.viewBox = xdoc.Root.Attribute("viewBox").Value;
-                
-                var path = xdoc.Root.Elements()
-                    .Where(e => e.Name.LocalName.Equals("path"))
-                    .FirstOrDefault();
-                
-                if (path != null) {
-                    brandSvgIcon.d = path.Attribute("d").Value;
-                }
+                brandSvgIcon.svg = File.ReadAllText(svg);
 
                 svgIconName = Regex.Match(svgIconName, "ic_(.*)_48px").Groups[1].Value;
 

@@ -49,19 +49,10 @@ namespace FontsJson
 
             foreach(var svg in svgs) {
                 var svgIconName = Path.GetFileNameWithoutExtension(svg);
-                var xdoc = XDocument.Load(svg);
 
                 dynamic brandSvgIcon = new ExpandoObject();
-                
-                brandSvgIcon.viewBox = xdoc.Root.Attribute("viewBox").Value;
-                
-                var path = xdoc.Root.Elements()
-                    .Where(e => e.Name.LocalName.Equals("path"))
-                    .FirstOrDefault();
-                
-                if (path != null) {
-                    brandSvgIcon.d = path.Attribute("d").Value;
-                }
+
+                brandSvgIcon.svg = File.ReadAllText(svg);
 
                 brandSvgIcons.Add(svgIconName, brandSvgIcon);
             }
